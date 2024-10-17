@@ -19,9 +19,15 @@ cred = credentials.Certificate({
     "client_x509_cert_url": st.secrets["FIREBASE_CLIENT_CERT_URL"]
 })
 
-firebase_admin.initialize_app(cred, {
-    'databaseURL': 'https://fix-medsense--interface-default-rtdb.firebaseio.com/' 
-})
+# firebase_admin.initialize_app(cred, {
+#     'databaseURL': 'https://fix-medsense--interface-default-rtdb.firebaseio.com/' 
+# })
+
+# Check if the default Firebase app already exists before initializing it
+if not firebase_admin._apps:
+    firebase_admin.initialize_app(cred, {
+        'databaseURL': 'https://fix-medsense--interface-default-rtdb.firebaseio.com/'
+    })
 
 # Function to save data to Firebase
 def save_to_firebase(data, phase):
